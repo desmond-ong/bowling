@@ -1,17 +1,19 @@
 # Bowling
-==========
+
+
 
 This repository contains materials for the following project:
 
-Ong, D. C., Asaba, M., & Gweon, H. (in prep). (Title TBC)
+Ong, D. C.\*, Asaba, M.\*, & Gweon, H. (in prep). (Title TBC)
 
+\* equal contribution
 
 This repository is maintained by Desmond Ong. Questions, comments, requests for clarification or replication, etc, should be directed to desmond (dot) ong (at) stanford (dot) edu
 
 
 ### Data
 
-The data for the experiments presented in the paper (will be put) in the /data folder.
+The data for the experiments presented in the paper (will be put) in the /Data folder.
 
 
 ### Analysis code
@@ -28,8 +30,8 @@ A sample of our experiments is also included in the repository.
 
 If you do finish an experiment, you'll also see a mockup of the data that would've been collected, had it been running live. The complete experiments can be loaded using the following links:
 
-- Experiment 1: http://rawgit.com/desmond-ong/bowling/master/Experiments/study1_bowling/index.html
-- Experiment 2: http://rawgit.com/desmond-ong/bowling/master/Experiments/study2_bowling/index.html
+- Study 1: http://rawgit.com/desmond-ong/bowling/master/Experiments/study1_bowling/index.html
+- Study 2: http://rawgit.com/desmond-ong/bowling/master/Experiments/study2_bowling/index.html
 
 
 
