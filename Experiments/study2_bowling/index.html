@@ -4,9 +4,28 @@ supposed to be shown at each stage of the experiment. -->
 <html>
 <head>
   <title>Start page</title>
+<!-- <link rel="stylesheet" href="https://www.stanford.edu/~dco/common/jquery-ui.css"> -->
 <script src="https://web.stanford.edu/~dco/common/jquery.min.js"></script>
+<!-- <script src="https://www.stanford.edu/~dco/common/jquery-ui.js"></script> -->
 <script src="https://web.stanford.edu/~dco/common/mmturkey.0.5.js?nowarn"></script>
 <link rel="stylesheet" href="https://www.stanford.edu/~dco/common/style.css" />
+
+
+<style type="text/css">
+
+.likertDiv { 
+    vertical-align: top;
+    display: block; 
+    background-image: url(images/likertGradient.jpeg); 
+    background-repeat: no-repeat; 
+    background-position: top right; 
+    background-size: 400px 75px; 
+    width: 400px;
+    height: 75px; 
+}
+
+</style>
+
 </head>
 <body>
 <script LANGUAGE="JavaScript">
@@ -90,15 +109,20 @@ function pressEnter(e) {
 }
 */
 
+
+function ValidateRadioButtonsPause1() {
+     if ($('input[name="happySadPause1"]:checked').val()!=null &&
+        $('#attentionCheck1Halfway').val()!='') {
+        return true;
+    } else {
+        alert ( "Please answer all the questions." );
+        return false;    
+    }
+}
+
 function ValidateRadioButtons1() {
-     if ($('input[name="happy1"]:checked').val()!=null &&
-        // $('input[name="sad1"]:checked').val()!=null &&
-        // $('input[name="anger1"]:checked').val()!=null &&
-        // $('input[name="surprise1"]:checked').val()!=null &&
-        // $('input[name="relief1"]:checked').val()!=null &&
-        // $('input[name="regret1"]:checked').val()!=null &&
-        // $('input[name="contentment1"]:checked').val()!=null &&
-        // $('input[name="disappointment1"]:checked').val()!=null &&
+     if ($('input[name="happySadAfter1"]:checked').val()!=null &&
+        $('input[name="happySadAfterLikert1"]:checked').val()!=null &&
         $('#attentionCheck1').val()!=''
         ) {
         return true;
@@ -108,16 +132,42 @@ function ValidateRadioButtons1() {
     }
 }
 
+function ValidateRadioButtons1a() {
+     if ($('input[name="happySadAfter1"]:checked').val()!=null &&
+        $('#attentionCheck1').val()!=''
+        ) {
+        return true;
+    } else {
+        alert ( "Please answer all the questions." );
+        return false;    
+    }
+}
+
+function ValidateRadioButtonsPause2() {
+     if ($('input[name="happySadPause2"]:checked').val()!=null &&
+        $('#attentionCheck2Halfway').val()!='') {
+        return true;
+    } else {
+        alert ( "Please answer all the questions." );
+        return false;    
+    }
+}
+
 
 function ValidateRadioButtons2() {
-     if ($('input[name="happy2"]:checked').val()!=null &&
-        // $('input[name="sad2"]:checked').val()!=null &&
-        // $('input[name="anger2"]:checked').val()!=null &&
-        // $('input[name="surprise2"]:checked').val()!=null &&
-        // $('input[name="relief2"]:checked').val()!=null &&
-        // $('input[name="regret2"]:checked').val()!=null &&
-        // $('input[name="contentment2"]:checked').val()!=null &&
-        // $('input[name="disappointment2"]:checked').val()!=null &&
+     if ($('input[name="happySadAfter2"]:checked').val()!=null &&
+        $('input[name="happySadAfterLikert2"]:checked').val()!=null &&
+        $('#attentionCheck2').val()!=''
+        ) {
+        return true;
+    } else {
+        alert ( "Please answer all the questions." );
+        return false;    
+    }
+}
+
+function ValidateRadioButtons2a() {
+     if ($('input[name="happySadAfter2"]:checked').val()!=null &&
         $('#attentionCheck2').val()!=''
         ) {
         return true;
@@ -129,29 +179,7 @@ function ValidateRadioButtons2() {
 
 function ValidateRadioButtons() {
     
-    if (// $('input[name="happy1"]:checked').val()!=null &&
-        // $('input[name="sad1"]:checked').val()!=null &&
-        // $('input[name="anger1"]:checked').val()!=null &&
-        // $('input[name="surprise1"]:checked').val()!=null &&
-        // $('input[name="relief1"]:checked').val()!=null &&
-        // $('input[name="regret1"]:checked').val()!=null &&
-        // $('input[name="contentment1"]:checked').val()!=null &&
-        // $('input[name="disappointment1"]:checked').val()!=null &&
-        // $('input[name="closeness1"]:checked').val()!=null &&
-        // $('input[name="effort1"]:checked').val()!=null &&
-        // $('input[name="happy2"]:checked').val()!=null &&
-        // $('input[name="sad2"]:checked').val()!=null &&
-        // $('input[name="anger2"]:checked').val()!=null &&
-        // $('input[name="surprise2"]:checked').val()!=null &&
-        // $('input[name="relief2"]:checked').val()!=null &&
-        // $('input[name="regret2"]:checked').val()!=null &&
-        // $('input[name="contentment2"]:checked').val()!=null &&
-        // $('input[name="disappointment2"]:checked').val()!=null &&
-        // $('input[name="closeness2"]:checked').val()!=null &&
-        // $('input[name="effort2"]:checked').val()!=null &&
-        // $('#attentionCheck1').val()!='' && 
-        // $('#attentionCheck2').val()!='' &&
-        $('input[name="3AFCHappy"]:checked').val()!=null
+    if ($('input[name="3AFCHappy"]:checked').val()!=null
         ) {
         return true;
     } else {
@@ -203,6 +231,23 @@ function ValidateDemographicForm() {
     anonymity is assured; the researchers who have requested your
     participation will not receive any personal information about you.
     </p>
+    
+
+           <!--  <table width="650" cellspacing="0" cellpadding="0" border="0" align="center">
+            <tr>
+                <td width="100" align="center"><span class="affect" id="affect1"> Happiness </span></td>
+                <td align="center" colspan="3">
+                    <div class="sliderClass" id="slider1">&nbsp;</div>
+                    <input type="hidden" name="hSlider1" id="hiddenSliderValue1" />
+                </td>
+            </tr> 
+            </table> -->
+        <br><br>
+        <center>
+        <br>
+        
+        <br><br>
+        </center>
 
 </div>
 
@@ -211,11 +256,8 @@ function ValidateDemographicForm() {
 <p class="block-text"> Today you will be seeing some hypothetical characters playing games. You will be guessing how they feel after the outcome of each game. </p>
 
 <br>
-<p class="block-text"> You will see a total of 1 trial. Please pay attention, as you won't be able to repeat the videos. </p>
+<p class="block-text"> You will see a total of 2 videos. Please pay attention, as you won't be able to repeat the videos. </p>
 
-
-
-       
 
 <div id="form">
 <button type="button" onclick="this.blur(); experiment.next()">Let's Start!</button>
@@ -226,16 +268,17 @@ function ValidateDemographicForm() {
 <div class="slide" id="stage">
     <div id="slideIntro">
         <p id="question">
-            Imagine that you saw <span id="CharName1a">{{}}</span> and <span id="CharName2a">{{}}</span> playing bowling! It's one of their first times playing this game.
-        </p>
-        <center>
+            Imagine that you saw <span id="CharName1a">{{}}</span> and <span id="CharName2a">{{}}</span> playing bowling!
+        
+        <br>
             <span id="resultsSpan"></span>
-            <br><br>
-            <p id="story-text-p"><span id="storySpan1"></span></p>
-            
-            
+            <br>
+           <!--  <p id="story-text-p"> --><span id="storySpan1"></span><!-- </p> -->
+            </p><br>
+        <center>    
             <button type="button" id="showMovieButton" onclick="this.blur(); $('#startMovieDiv').show(); $('#movie1Div').show(); $('#slideIntro').hide();">Ok</button>
         </center>
+        <br><br>
     </div>
 
     <center>
@@ -245,484 +288,423 @@ function ValidateDemographicForm() {
         Click the button to see how <span id="CharName1e">{{}}</span> does! 
 
         (If you have your sound on, note that there are sound effects). <br>
-        
-        <button type="button" id="startMovieButton" onclick="this.blur(); videoElement1.play(); $('#startMovieDiv').hide(); setTimeout(function () {$('#response1').show(); experiment.startTime=(new Date()).getTime();}, 10000);">Next</button>
         </p>
+        <button type="button" id="startMovieButton" onclick="this.blur(); videoElement1.play(); $('#startMovieDiv').hide(); setTimeout(function () {$('#response1Halfway').show(); experiment.startTime=(new Date()).getTime(); experiment.loadNextVideo1();}, 4500);">Next</button>
+        
         </div>
     </center>
         
     <div id="movie1Div">
         <center>
-        <video width="512" height="384" preload id="videoElement1" src="stimuli/CMJustMiss.ogv">
+        <video width="512" height="384" preload id="videoElement1" src="ver3_stim/Annie_NearMiss_1.ogv">
+        Your browser does not support the video tag.
+        </video>
+        </center>
+    </div>
+    <div id="movie1bDiv">
+        <center>
+        <video width="512" height="384" preload id="videoElement1b" src="ver3_stim/Annie_NearMiss_2.ogv">
         Your browser does not support the video tag.
         </video>
         </center>
     </div>
 
 
+    <div id="response1Halfway">
+        <center>
+        <h3> Imagine we froze time right at this point. </h3>
+        </center>
+
+        <p id="question">
+            <span id="halfwayOutcomeSpan1"></span>
+            <br> 
+            Does she feel happy or sad?
+        </p>
+        <center>
+            <!-- <input type="radio" name="happySadPause1" value="happy" /> Happy <img src="images/happyFace.png" width=20></img><br>
+            <input type="radio" name="happySadPause1" value="sad" /> &nbsp; Sad &nbsp; <img src="images/sadFace.png" width=20></img> -->
+            <div class="likertDiv" id="pauseDiv_1">
+            <table width="400" cellspacing="0" cellpadding="0" border="0" align="center">
+                <tr>
+                    <td width="50" align="center">
+                        <!-- <input type="radio" name="happySadPause1" value="1"> -->
+                    </td>
+                    <td width="50" align="center">
+                        <!-- <input type="radio" name="happySadPause1" value="2"> -->
+                    </td>
+                    <td width="50" align="center"> 
+                        <img src="images/sadFace_copy.png" width=20></img> 
+                        <br> 
+                        <input type="radio" name="happySadPause1" value="3"> 
+                        <br>
+                        Sad 
+                    </td>
+                    <td width="50" align="center">
+                        <!-- <input type="radio" name="happySadPause1" value="4"> -->
+                    </td>
+                    <td width="50" align="center">
+                        <!-- <input type="radio" name="happySadPause1" value="5"> -->
+                    </td>
+                    <td width="50" align="center"> 
+                        <img src="images/happyFace_copy.png" width=20></img> 
+                        <br> 
+                        <input type="radio" name="happySadPause1" value="6"> 
+                        <br>
+                        Happy 
+                    </td>
+                    <td width="50" align="center">
+                        <!-- <input type="radio" name="happySadPause1" value="7"> -->
+                    </td>
+                    <td width="50" align="center">
+                        <!-- <input type="radio" name="happySadPause1" value="8"> -->
+                    </td>
+                    </tr></table>
+            </div>
+
+
+        <br><br>
+        <p id="question">
+            How many pins does she expect to knock down? (type a number from 0 to 6)
+        </p>
+            <input type="text" id="attentionCheck1Halfway" /><br />
+        <br><br>
+
+        <button type="button" id="startMovieButtonPause1a" onclick="this.blur(); if(ValidateRadioButtonsPause1()) {$('#response1Halfway').hide(); $('#response1bHalfway').show();}">Next</button>
+        </center>
+        <br><br>
+    </div>
+    <div id="response1bHalfway">
+        <center>
+        Click on the button to see what happens next!
+        <br><br>
+
+        <button type="button" id="startMovieButtonPause1b" onclick="this.blur(); videoElement1b.play(); experiment.afterPause1(); $('#response1bHalfway').hide(); setTimeout(function () {$('#response1').show(); experiment.startTime=(new Date()).getTime();}, 6500);">Next</button>
+        </center>
+        <br><br>
+    </div>
+
 
 
     <div id="response1">
+        <div id="afterResponse1a">
         <center>
-        <h3> The following questions are about <span id="CharName1b">{{}}</span> </h3>
+        <!-- <h3> The following questions are about <span id="CharName1b">{{}}</span> </h3> -->
         <p id="question">
-            For <span id="CharName1f">{{}}</span>: <span id="outcome1span"></span>
+            <!-- For <span id="CharName1f">{{}}</span>:  --><span id="outcome1span"></span>
         </p>
             <input type="text" id="attentionCheck1" /><br />
          
-        <br>
-        <!-- <p id="question">
-            How do you think <span id="CharName1c">{{}}</span> feels? Please guess how strongly <span id="CharName1j">{{}}</span>  feels for each of the following emotions:
-        </p> -->
-        
-        <!-- <form name="happy1form">
-        &nbsp; Happiness: &nbsp; &nbsp; 
-            <span id="happinessResponse">
-                Not at all
-                    <input type="radio" name="happy1" value="1" />  
-                    <input type="radio" name="happy1" value="2" />  
-                    <input type="radio" name="happy1" value="3" />  
-                    <input type="radio" name="happy1" value="4" />  
-                    <input type="radio" name="happy1" value="5" />  
-                    <input type="radio" name="happy1" value="6" />  
-                Extremely
-            </span>
-        </form>
-               
-        <form name="sad1form">
-        &nbsp; &nbsp; &nbsp; Sadness: &nbsp; &nbsp; &nbsp;
-            <span id="sadnessResponse">
-                Not at all
-                    <input type="radio" name="sad1" value="1" />  
-                    <input type="radio" name="sad1" value="2" />  
-                    <input type="radio" name="sad1" value="3" />  
-                    <input type="radio" name="sad1" value="4" />  
-                    <input type="radio" name="sad1" value="5" />  
-                    <input type="radio" name="sad1" value="6" />  
-                Extremely
-            </span>
-        </form>
-        
-        <form name="anger1form">
-        &nbsp; &nbsp; &nbsp; Anger: &nbsp; &nbsp; &nbsp; &nbsp;
-            <span id="angerResponse">
-                Not at all
-                    <input type="radio" name="anger1" value="1" />  
-                    <input type="radio" name="anger1" value="2" />  
-                    <input type="radio" name="anger1" value="3" />  
-                    <input type="radio" name="anger1" value="4" />  
-                    <input type="radio" name="anger1" value="5" />  
-                    <input type="radio" name="anger1" value="6" />  
-                Extremely
-            </span>
-        </form>
-        
-        <form name="surprise1form">
-        &nbsp; &nbsp; Surprise: &nbsp; &nbsp; &nbsp; 
-            <span id="surpriseResponse">
-                Not at all
-                    <input type="radio" name="surprise1" value="1" />  
-                    <input type="radio" name="surprise1" value="2" />  
-                    <input type="radio" name="surprise1" value="3" />  
-                    <input type="radio" name="surprise1" value="4" />  
-                    <input type="radio" name="surprise1" value="5" />  
-                    <input type="radio" name="surprise1" value="6" />  
-                Extremely
-            </span>
-        </form>
-        <br>
-        <form name="relief1form">
-        &nbsp; &nbsp; &nbsp; &nbsp;  Relief: &nbsp; &nbsp; &nbsp; &nbsp; 
-            <span id="reliefResponse">
-                Not at all
-                    <input type="radio" name="relief1" value="1" />  
-                    <input type="radio" name="relief1" value="2" />  
-                    <input type="radio" name="relief1" value="3" />  
-                    <input type="radio" name="relief1" value="4" />  
-                    <input type="radio" name="relief1" value="5" />  
-                    <input type="radio" name="relief1" value="6" />   
-                Extremely
-            </span>
-        </form>
-
-        <form name="regret1form">
-        &nbsp; &nbsp; &nbsp; &nbsp;  Regret: &nbsp; &nbsp; &nbsp;
-            <span id="regretResponse">
-                Not at all
-                    <input type="radio" name="regret1" value="1" />  
-                    <input type="radio" name="regret1" value="2" />  
-                    <input type="radio" name="regret1" value="3" />  
-                    <input type="radio" name="regret1" value="4" />  
-                    <input type="radio" name="regret1" value="5" />  
-                    <input type="radio" name="regret1" value="6" />    
-                Extremely
-            </span>
-        </form>
-        
-        <form name="contentment1form">
-        Contentment: &nbsp;
-            <span id="contentmentResponse">
-                Not at all
-                    <input type="radio" name="contentment1" value="1" />  
-                    <input type="radio" name="contentment1" value="2" />  
-                    <input type="radio" name="contentment1" value="3" />  
-                    <input type="radio" name="contentment1" value="4" />  
-                    <input type="radio" name="contentment1" value="5" />  
-                    <input type="radio" name="contentment1" value="6" />     
-                Extremely
-            </span>
-        </form>
-        
-        <form name="disappointment1form">
-        Disappointment:
-            <span id="disappointmentResponse">
-                Not at all
-                    <input type="radio" name="disappointment1" value="1" />  
-                    <input type="radio" name="disappointment1" value="2" />  
-                    <input type="radio" name="disappointment1" value="3" />  
-                    <input type="radio" name="disappointment1" value="4" />  
-                    <input type="radio" name="disappointment1" value="5" />  
-                    <input type="radio" name="disappointment1" value="6" />  
-                Extremely &nbsp; &nbsp;
-            </span>
-        </form> -->
-
-        <br>
         <p id="question">
-            How do you think <span id="CharName1c">{{}}</span> feels? 
+            Earlier, you said that <span id="CharName1c">{{}}</span> was feeling <b><span id="happyPauseResponse1"></span></b>. Is she feeling better or worse now?
         </p>
+            <input type="radio" name="happySadAfter1" value="1"> Better <br>
+            <input type="radio" name="happySadAfter1" value="0"> Worse
         <br><br>
-        <div class="likertDiv">
-            <table width="600" cellspacing="0" cellpadding="0" border="0" align="center">
-                <tr>
-                    <td width="100" align="center">
-                        <input type="radio" name="happy1" value="1">
-                        <br>
-                        Really <br> Sad
-                    </td>
-                    <td width="100" align="center">
-                        <input type="radio" name="happy1" value="2">
-                        <br>
-                        Medium <br> Sad 
-                    </td>
-                    <td width="100" align="center"> 
-                        <input type="radio" name="happy1" value="3"> 
-                        <br>
-                        Kind of <br> Sad
-                    </td>
-                    <td width="100" align="center">
-                        <input type="radio" name="happy1" value="4">
-                        <br>
-                        Kind of <br> Happy 
-                    </td>
-                    <td width="100" align="center">
-                        <input type="radio" name="happy1" value="5">
-                        <br>
-                        Medium <br> Happy 
-                    </td>
-                    <td width="100" align="center"> 
-                        <input type="radio" name="happy1" value="6"> 
-                        <br>
-                        Really <br> Happy 
-                    </td>
-                    </tr></table>
+        <button type="button" id="happySadAfter1Button" onclick="this.blur(); if (ValidateRadioButtons1a()) { $('#afterResponse1b').show(); $('#afterResponse1a').hide();}">Ok</button>
+        </center>
         </div>
+        <div id="afterResponse1b">
+        <p id="question">
+            Earlier, you said that <span id="CharName1f">{{}}</span> was feeling <b><span id="happyPauseResponse1b"></span></b>. <br><br>
+            How does she feel now? <br><br>
+                <!-- <input type="radio" name="happySadAfterLikert1" value="5"> A lot better &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+                <input type="radio" name="happySadAfterLikert1" value="4"> Slightly better &nbsp;&nbsp; <br>
+                <input type="radio" name="happySadAfterLikert1" value="3"> About the same <br>
+                <input type="radio" name="happySadAfterLikert1" value="2"> Slightly worse &nbsp;&nbsp; <br>
+                <input type="radio" name="happySadAfterLikert1" value="1"> A lot worse &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br> -->
+                <center>
+                <div class="likertDiv">
+                    <table width="400" cellspacing="0" cellpadding="0" border="0" align="center">
+                        <tr>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert1" value="1">
+                            </td>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert1" value="2">
+                            </td>
+                            <td width="50" align="center"> 
+                                <img src="images/sadFace_copy.png" width=20></img> 
+                                <br> 
+                                <input type="radio" name="happySadAfterLikert1" value="3" id="happySadAfter1_sad"> 
+                                <br>
+                                Sad 
+                            </td>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert1" value="4">
+                            </td>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert1" value="5">
+                            </td>
+                            <td width="50" align="center"> 
+                                <img src="images/happyFace_copy.png" width=20></img> 
+                                <br> 
+                                <input type="radio" name="happySadAfterLikert1" value="6" id="happySadAfter1_happy"> 
+                                <br>
+                                Happy 
+                            </td>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert1" value="7">
+                            </td>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert1" value="8">
+                            </td>
+                            </tr></table>
+                </div>
+                
+               <!--  <div class="likertDiv" id="afterResult_sad1">
+                    <table width="400" cellspacing="0" cellpadding="0" border="0" align="center">
+                        <tr>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert1" value="1">
+                            </td>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert1" value="2">
+                            </td>
+                            <td width="50" align="center"> 
+                                <img src="images/sadFace_copy.png" width=20></img> 
+                                <br> 
+                                <input type="radio" name="happySadAfterLikert1" value="3"> 
+                                <br>
+                                Sad 
+                            </td>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert1" value="4">
+                            </td>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert1" value="5">
+                            </td>
+                            <td width="50" align="center"> 
+                                <img src="images/happyFace_copy.png" width=20></img> 
+                                <br> 
+                                <input type="radio" name="happySadAfterLikert1" value="6" disabled> 
+                                <br>
+                                Happy 
+                            </td>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert1" value="7" disabled>
+                            </td>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert1" value="8" disabled>
+                            </td>
+                            </tr></table>
+                </div> -->
+            </center>
+
+        </p>
+
+
 
         <br><br>
-
-        <button type="button" onclick="this.blur(); if (ValidateRadioButtons1()) { $('#startMovieDiv2').show(); $('#movie2Div').show(); $('#response1').hide(); $('#movie1Div').hide(); experiment.endTime=(new Date()).getTime(); experiment.reactionTime1 = experiment.endTime - experiment.startTime; }">Ok</button>
-
-        <!-- <p id="question">
-            How close do you think <span id="CharName1i">{{}}</span> came to winning 2 stars?
-        </p>
-         <form name="closenessForm">
-        &nbsp; &nbsp; &nbsp; &nbsp; Closeness: &nbsp; &nbsp; 
-            <span id="closenessResponse">
-                Not at all 
-                    <input type="radio" name="closeness1" value="1" />  
-                    <input type="radio" name="closeness1" value="2" />  
-                    <input type="radio" name="closeness1" value="3" />  
-                    <input type="radio" name="closeness1" value="4" />  
-                    <input type="radio" name="closeness1" value="5" />  
-                    <input type="radio" name="closeness1" value="6" />  
-                    <input type="radio" name="closeness1" value="7" /> 
-                    <input type="radio" name="closeness1" value="8" />  
-                    <input type="radio" name="closeness1" value="9" />   
-                Extremely &nbsp; &nbsp;
-            </span>
-        </form>
-
-        <p id="question">
-            How hard did <span id="CharName1e">{{}}</span>  try?
-        </p>
-         <form name="effortForm">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Effort: &nbsp; &nbsp; 
-            <span id="effortResponse">
-                Not at all 
-                    <input type="radio" name="effort1" value="1" />  
-                    <input type="radio" name="effort1" value="2" />  
-                    <input type="radio" name="effort1" value="3" />  
-                    <input type="radio" name="effort1" value="4" />  
-                    <input type="radio" name="effort1" value="5" />  
-                    <input type="radio" name="effort1" value="6" />  
-                    <input type="radio" name="effort1" value="7" /> 
-                    <input type="radio" name="effort1" value="8" />  
-                    <input type="radio" name="effort1" value="9" />   
-                Extremely Hard &nbsp; &nbsp;
-            </span>
-        </form>
-        <br> -->
-    </center>
+        <center>
+        <button type="button" onclick="this.blur(); if (ValidateRadioButtons1()) { $('#startMovieDiv2').show(); $('#movie2Div').show(); $('#response1').hide(); $('#movie1Div').hide(); $('#movie1bDiv').hide(); experiment.endTime=(new Date()).getTime(); experiment.reactionTime1 = experiment.endTime - experiment.startTime; }">Ok</button>
+        <br><br>
+        </center>
+        </div>
+    
     
     </div>
         
 
-    <center>
+    
         <!-- <p class="block-text">      -->
         <div id="startMovieDiv2">
         <p id="question">
         Now we'll watch <span id="CharName2e">{{}}</span> play!
-        
-        <button type="button" id="startMovieButton2" onclick="this.blur(); videoElement2.play(); $('#startMovieDiv2').hide(); setTimeout(function () {$('#response2').show(); experiment.startTime=(new Date()).getTime();}, 10000);">Next</button>
+        <center>    
+        <button type="button" id="startMovieButton2" onclick="this.blur(); videoElement2.play(); $('#startMovieDiv2').hide(); setTimeout(function () {$('#response2Halfway').show(); experiment.startTime=(new Date()).getTime(); experiment.loadNextVideo2();}, 4500);">Next</button>
+        </center>
         </p>
         </div>
-    </center>
+    
 
         <div id="movie2Div">
             <center>
-                <video width="512" height="384" preload id="videoElement2" src="videos/ElmoJustIn.ogv">
+                <video width="512" height="384" preload id="videoElement2" src="ver3_stim/Annie_NearMiss_1.ogv">
+                </video>
+            </center>
+        </div>
+        <div id="movie2bDiv">
+            <center>
+                <video width="512" height="384" preload id="videoElement2b" src="ver3_stim/Annie_NearMiss_2.ogv">
                 </video>
             </center>
         </div>
 
+    <div id="response2Halfway">
+        <center>
+        <h3> Imagine we froze time right at this point. </h3>
+        <p id="question">
+            <span id="halfwayOutcomeSpan2"></span>
+            <br> 
+            Does she feel happy or sad?
+        </p>
+            <!-- <input type="radio" name="happySadPause2" value="happy" /> Happy <img src="images/happyFace.png" width=20></img><br>
+            <input type="radio" name="happySadPause2" value="sad" /> &nbsp; Sad &nbsp; <img src="images/sadFace.png" width=20></img> -->
+            <div class="likertDiv" id="pauseDiv_2">
+            <table width="400" cellspacing="0" cellpadding="0" border="0" align="center">
+                <tr>
+                    <td width="50" align="center">
+                        <!-- <input type="radio" name="happySadPause2" value="1"> -->
+                    </td>
+                    <td width="50" align="center">
+                        <!-- <input type="radio" name="happySadPause2" value="2"> -->
+                    </td>
+                    <td width="50" align="center"> 
+                        <img src="images/sadFace_copy.png" width=20></img> 
+                        <br> 
+                        <input type="radio" name="happySadPause2" value="3"> 
+                        <br>
+                        Sad 
+                    </td>
+                    <td width="50" align="center">
+                        <!-- <input type="radio" name="happySadPause2" value="4"> -->
+                    </td>
+                    <td width="50" align="center">
+                        <!-- <input type="radio" name="happySadPause2" value="5"> -->
+                    </td>
+                    <td width="50" align="center"> 
+                        <img src="images/happyFace_copy.png" width=20></img> 
+                        <br> 
+                        <input type="radio" name="happySadPause2" value="6"> 
+                        <br>
+                        Happy 
+                    </td>
+                    <td width="50" align="center">
+                        <!-- <input type="radio" name="happySadPause2" value="7"> -->
+                    </td>
+                    <td width="50" align="center">
+                        <!-- <input type="radio" name="happySadPause2" value="8"> -->
+                    </td>
+                    </tr></table>
+            </div>
+        <br><br>
+        <p id="question">
+            How many pins does she expect to knock down? (type a number from 0 to 6)
+        </p>
+            <input type="text" id="attentionCheck2Halfway" /><br />
+        <br><br>
+
+        <button type="button" id="startMovieButtonPause2a" onclick="this.blur(); if(ValidateRadioButtonsPause2()) {$('#response2Halfway').hide(); $('#response2bHalfway').show();}">Next</button>
+        </center>
+        <br><br>
+    </div>
+    <div id="response2bHalfway">
+        <center>
+        Click on the button to see what happens next!
+        <br><br>
+
+        <button type="button" id="startMovieButtonPause2b" onclick="this.blur(); videoElement2b.play(); experiment.afterPause2(); $('#response2bHalfway').hide(); setTimeout(function () {$('#response2').show(); experiment.startTime=(new Date()).getTime();}, 6500);">Next</button>
+        </center>
+        <br><br>
+    </div>
+
+
 
    <div id="response2">
-    <center>
-        <h3> Now, the following questions are about <span id="CharName2b">{{}}</span> </h3>
-
+    <div id="afterResponse2a">
+        <center>
+        <!-- <h3> Now, the following questions are about <span id="CharName2b">{{}}</span> </h3> -->
         <p id="question">
-            For <span id="CharName2f">{{}}</span>: <span id="outcome2span"></span>
+            <span id="outcome2span"></span>
         </p>
             <input type="text" id="attentionCheck2" /><br />
 
-        <!-- <p id="question">
-            How do you think <span id="CharName2c">{{}}</span> feels?  -->
-            <!-- Please guess how strongly <span id="CharName2j">{{}}</span> feels for each of the following emotions: -->
-        <!-- </p> -->
-
-
-        <!-- <form name="happy2form">
-        &nbsp; Happiness: &nbsp; &nbsp; 
-            <span id="happinessResponse">
-                Not at all
-                    <input type="radio" name="happy2" value="1" />  
-                    <input type="radio" name="happy2" value="2" />  
-                    <input type="radio" name="happy2" value="3" />  
-                    <input type="radio" name="happy2" value="4" />  
-                    <input type="radio" name="happy2" value="5" />  
-                    <input type="radio" name="happy2" value="6" />  
-                Extremely
-            </span>
-        </form>
-               
-        <form name="sad2form">
-        &nbsp; &nbsp; &nbsp; Sadness: &nbsp; &nbsp; &nbsp;
-            <span id="sadnessResponse">
-                Not at all
-                    <input type="radio" name="sad2" value="1" />  
-                    <input type="radio" name="sad2" value="2" />  
-                    <input type="radio" name="sad2" value="3" />  
-                    <input type="radio" name="sad2" value="4" />  
-                    <input type="radio" name="sad2" value="5" />  
-                    <input type="radio" name="sad2" value="6" />  
-                Extremely
-            </span>
-        </form>
-        
-        <form name="anger2form">
-        &nbsp; &nbsp; &nbsp; Anger: &nbsp; &nbsp; &nbsp; &nbsp;
-            <span id="angerResponse">
-                Not at all
-                    <input type="radio" name="anger2" value="1" />  
-                    <input type="radio" name="anger2" value="2" />  
-                    <input type="radio" name="anger2" value="3" />  
-                    <input type="radio" name="anger2" value="4" />  
-                    <input type="radio" name="anger2" value="5" />  
-                    <input type="radio" name="anger2" value="6" />   
-                Extremely
-            </span>
-        </form>
-        
-        <form name="surprise2form">
-        &nbsp; &nbsp; Surprise: &nbsp; &nbsp; &nbsp; 
-            <span id="surpriseResponse">
-                Not at all
-                    <input type="radio" name="surprise2" value="1" />  
-                    <input type="radio" name="surprise2" value="2" />  
-                    <input type="radio" name="surprise2" value="3" />  
-                    <input type="radio" name="surprise2" value="4" />  
-                    <input type="radio" name="surprise2" value="5" />  
-                    <input type="radio" name="surprise2" value="6" />    
-                Extremely
-            </span>
-        </form>
-        <br>
-        <form name="relief2form">
-        &nbsp; &nbsp; &nbsp; &nbsp;  Relief: &nbsp; &nbsp; &nbsp; &nbsp; 
-            <span id="reliefResponse">
-                Not at all
-                    <input type="radio" name="relief2" value="1" />  
-                    <input type="radio" name="relief2" value="2" />  
-                    <input type="radio" name="relief2" value="3" />  
-                    <input type="radio" name="relief2" value="4" />  
-                    <input type="radio" name="relief2" value="5" />  
-                    <input type="radio" name="relief2" value="6" />  
-                Extremely
-            </span>
-        </form>
-
-        <form name="regret2form">
-        &nbsp; &nbsp; &nbsp; &nbsp;  Regret: &nbsp; &nbsp; &nbsp;
-            <span id="regretResponse">
-                Not at all
-                    <input type="radio" name="regret2" value="1" />  
-                    <input type="radio" name="regret2" value="2" />  
-                    <input type="radio" name="regret2" value="3" />  
-                    <input type="radio" name="regret2" value="4" />  
-                    <input type="radio" name="regret2" value="5" />  
-                    <input type="radio" name="regret2" value="6" />  
-                Extremely
-            </span>
-        </form>
-        
-        <form name="contentment2form">
-        Contentment: &nbsp;
-            <span id="contentmentResponse">
-                Not at all
-                    <input type="radio" name="contentment2" value="1" />  
-                    <input type="radio" name="contentment2" value="2" />  
-                    <input type="radio" name="contentment2" value="3" />  
-                    <input type="radio" name="contentment2" value="4" />  
-                    <input type="radio" name="contentment2" value="5" />  
-                    <input type="radio" name="contentment2" value="6" />  
-                Extremely
-            </span>
-        </form>
-        
-        <form name="disappointment2form">
-        Disappointment:
-            <span id="disappointmentResponse">
-                Not at all
-                    <input type="radio" name="disappointment2" value="1" />  
-                    <input type="radio" name="disappointment2" value="2" />  
-                    <input type="radio" name="disappointment2" value="3" />  
-                    <input type="radio" name="disappointment2" value="4" />  
-                    <input type="radio" name="disappointment2" value="5" />  
-                    <input type="radio" name="disappointment2" value="6" />  
-                Extremely &nbsp; &nbsp;
-            </span>
-        </form> -->
-
-        <!-- <p id="question">
-            How close do you think <span id="CharName2i">{{}}</span> came to winning 2 stars?
-        </p>
-         <form name="closenessForm">
-        &nbsp; &nbsp; &nbsp; &nbsp; Closeness: &nbsp; &nbsp; 
-            <span id="closenessResponse">
-                Not at all 
-                    <input type="radio" name="closeness2" value="1" />  
-                    <input type="radio" name="closeness2" value="2" />  
-                    <input type="radio" name="closeness2" value="3" />  
-                    <input type="radio" name="closeness2" value="4" />  
-                    <input type="radio" name="closeness2" value="5" />  
-                    <input type="radio" name="closeness2" value="6" />  
-                    <input type="radio" name="closeness2" value="7" /> 
-                    <input type="radio" name="closeness2" value="8" />  
-                    <input type="radio" name="closeness2" value="9" />   
-                Extremely &nbsp; &nbsp;
-            </span>
-        </form>
-
         <p id="question">
-            How hard did <span id="CharName2e">{{}}</span>  try?
+            Earlier, you said that <span id="CharName2c">{{}}</span> was feeling <b><span id="happyPauseResponse2"></span></b>. Is she feeling better or worse now?
         </p>
-         <form name="effortForm">
-            &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; Effort: &nbsp; &nbsp; 
-            <span id="effortResponse">
-                Not at all 
-                    <input type="radio" name="effort2" value="1" />  
-                    <input type="radio" name="effort2" value="2" />  
-                    <input type="radio" name="effort2" value="3" />  
-                    <input type="radio" name="effort2" value="4" />  
-                    <input type="radio" name="effort2" value="5" />  
-                    <input type="radio" name="effort2" value="6" />  
-                    <input type="radio" name="effort2" value="7" /> 
-                    <input type="radio" name="effort2" value="8" />  
-                    <input type="radio" name="effort2" value="9" />   
-                Extremely Hard &nbsp; &nbsp;
-            </span>
-        </form> -->
-
-        <br>
-        <p id="question">
-            How do you think <span id="CharName2c">{{}}</span> feels? 
-        </p>
+        <input type="radio" name="happySadAfter2" value="1"> Better <br>
+        <input type="radio" name="happySadAfter2" value="0"> Worse
         <br><br>
+        <button type="button" id="happySadAfter2Button" onclick="this.blur(); if (ValidateRadioButtons2a()) { $('#afterResponse2b').show(); $('#afterResponse2a').hide();}">Ok</button>
+        </center>
+        </div>
+        <div id="afterResponse2b">
+        <p id="question">
+            Earlier, you said that <span id="CharName2f">{{}}</span> was feeling <b><span id="happyPauseResponse2b"></span></b>. <br><br>
+            How does she feel now? <br><br>
+                <center>
+                <div class="likertDiv">
+                    <table width="400" cellspacing="0" cellpadding="0" border="0" align="center">
+                        <tr>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert2" value="1">
+                            </td>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert2" value="2">
+                            </td>
+                            <td width="50" align="center"> 
+                                <img src="images/sadFace_copy.png" width=20></img> 
+                                <br> 
+                                <input type="radio" name="happySadAfterLikert2" value="3" id="happySadAfter2_sad"> 
+                                <br>
+                                Sad 
+                            </td>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert2" value="4">
+                            </td>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert2" value="5">
+                            </td>
+                            <td width="50" align="center"> 
+                                <img src="images/happyFace_copy.png" width=20></img> 
+                                <br> 
+                                <input type="radio" name="happySadAfterLikert2" value="6" id="happySadAfter2_happy"> 
+                                <br>
+                                Happy 
+                            </td>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert2" value="7">
+                            </td>
+                            <td width="50" align="center">
+                                <input type="radio" name="happySadAfterLikert2" value="8">
+                            </td>
+                            </tr></table>
+                </div>
+
+        <!-- <p id="question">
+            How much better or worse? <br><br>
+                <input type="radio" name="happySadAfterLikert2" value="5"> A lot better &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+                <input type="radio" name="happySadAfterLikert2" value="4"> Slightly better &nbsp;&nbsp; <br>
+                <input type="radio" name="happySadAfterLikert2" value="3"> About the same <br>
+                <input type="radio" name="happySadAfterLikert2" value="2"> Slightly worse &nbsp;&nbsp; <br>
+                <input type="radio" name="happySadAfterLikert2" value="1"> A lot worse &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <br>
+        </p> -->
+
+
+<!--         <center>
         <div class="likertDiv">
-            <table width="600" cellspacing="0" cellpadding="0" border="0" align="center">
+            <table width="400" cellspacing="0" cellpadding="0" border="0" align="center">
                 <tr>
-                    <td width="100" align="center">
-                        <input type="radio" name="happy2" value="1">
-                        <br>
-                        Really <br> Sad
-                    </td>
-                    <td width="100" align="center">
-                        <input type="radio" name="happy2" value="2">
-                        <br>
-                        Medium <br> Sad 
-                    </td>
-                    <td width="100" align="center"> 
-                        <input type="radio" name="happy2" value="3"> 
-                        <br>
-                        Kind of <br> Sad
-                    </td>
-                    <td width="100" align="center">
-                        <input type="radio" name="happy2" value="4">
-                        <br>
-                        Kind of <br> Happy 
-                    </td>
-                    <td width="100" align="center">
-                        <input type="radio" name="happy2" value="5">
-                        <br>
-                        Medium <br> Happy 
-                    </td>
-                    <td width="100" align="center"> 
-                        <input type="radio" name="happy2" value="6"> 
-                        <br>
-                        Really <br> Happy 
-                    </td>
+                    <td width="50" align="center"><input type="radio" name="happySadAfterLikert2" value="1"></td>
+                    <td width="50" align="center"><input type="radio" name="happySadAfterLikert2" value="2"></td>
+                    <td width="50" align="center"> <img src="images/sadFace_copy.png" width=20></img> <br> <input type="radio" name="happySadAfterLikert2" value="3"> <br>Sad </td>
+                    <td width="50" align="center"><input type="radio" name="happySadAfterLikert2" value="4"></td>
+                    <td width="50" align="center"><input type="radio" name="happySadAfterLikert2" value="5"></td>
+                    <td width="50" align="center"> <img src="images/happyFace_copy.png" width=20></img> <br> <input type="radio" name="happySadAfterLikert2" value="6"> <br>Happy </td>
+                    <td width="50" align="center"><input type="radio" name="happySadAfterLikert2" value="7"></td>
+                    <td width="50" align="center"><input type="radio" name="happySadAfterLikert2" value="8"></td>
                     </tr></table>
         </div>
-
+        </center> -->
         <br><br>
-
-        <button type="button" onclick="this.blur(); if (ValidateRadioButtons2()) { $('#response2').hide(); $('#movie2Div').hide(); $('#overallDiv').show(); experiment.endTime=(new Date()).getTime(); experiment.reactionTime2 = experiment.endTime - experiment.startTime; experiment.startTime=(new Date()).getTime();  }">Ok</button>
-
+        <button type="button" onclick="this.blur(); if (ValidateRadioButtons2()) { $('#response2').hide(); $('#movie2Div').hide(); $('#movie2bDiv').hide(); $('#overallDiv').show(); experiment.endTime=(new Date()).getTime(); experiment.reactionTime2 = experiment.endTime - experiment.startTime; experiment.startTime=(new Date()).getTime();  }">Ok</button>
+        <br><br>
         </center>
-
+        </p>
         </div>
+    </div>
         
-        <div id="overallDiv">
+    <div id="overallDiv">
         <center>
         <span id="resultsSpan2"></span> <br>
-        Overall, who feels happier after the result of the games?<br>
-        <input type="radio" name="3AFCHappy" value="1" />  <span id="CharName1d">{{}}</span> <br>
-        <input type="radio" name="3AFCHappy" value="2" />  <span id="CharName2d">{{}}</span> <br>
+        Overall, <b>who feels happier</b> after the result of the games?<br>
+        <input type="radio" name="3AFCHappy" value="1" />  The first character, <span id="CharName1d">{{}}</span> <br>
+        <input type="radio" name="3AFCHappy" value="2" />  The second character, <span id="CharName2d">{{}}</span> <br>
         <input type="radio" name="3AFCHappy" value="3" />  Both feel equally happy
         <br>
         <br>
         <span id="infoQ">Why do you think so?</span>&nbsp;&nbsp; <br>
-        <TEXTAREA name="3AFCFreeResponse" ROWS=2 COLS=50></TEXTAREA>
+        <TEXTAREA name="3AFCFreeResponse" ROWS=4 COLS=50></TEXTAREA>
 
         <br>
         <button type="button" id="nextButton" onclick="this.blur(); if(ValidateRadioButtons()) {experiment.next();}">Next</button>
@@ -740,7 +722,8 @@ function ValidateDemographicForm() {
     </br>
     <span id="infoQ">What is your gender?</span>&nbsp;&nbsp;
     <input type="radio" name="genderButton" value="M" /><span id="opt">Male</span>&nbsp;&nbsp;
-    <input type="radio" name="genderButton" value="F" /><span id="opt">Female</span>
+    <input type="radio" name="genderButton" value="F" /><span id="opt">Female</span>&nbsp;&nbsp;
+    <input type="radio" name="genderButton" value="O" /><span id="opt">Other</span>
     </form>
     
     <span id="infoQ">What is your age?</span>&nbsp;&nbsp;
@@ -759,10 +742,7 @@ function ValidateDemographicForm() {
     
     <br>
     <button type="button" onclick="this.blur(); if (ValidateDemographicForm()) {experiment.end();}">Submit</button>
-        <!--
-    <button type="button" onclick="this.blur(); if (ValidateDemographicForm() && ValidateSelect(document.age) && ValidateText(document.language.nativeLanguage)) {experiment.end();}">Submit</button>
-    -->
-
+    <br><br>
     </div>
 </div>
 
