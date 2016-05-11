@@ -1,0 +1,368 @@
+---
+title: "bowling_adults"
+author: "Desmond Ong, Mika Asaba"
+date: "May 11, 2016"
+output: html_document
+---
+
+```{r preamble, echo=FALSE}
+source("summarySE.R")
+library(ggplot2)
+my_default_theme = theme_bw() + theme(strip.background = element_rect(fill="#FFFFFF"), 
+        strip.text = element_text(size=12), 
+        axis.text = element_text(size=12),
+        axis.title.x = element_text(size=14, vjust=-0.2),
+        axis.title.y = element_text(size=14, vjust=0.7),
+        legend.text = element_text(size=12),
+        title = element_text(size=18, vjust=1),
+        panel.grid = element_blank())
+
+cbPalette <- c("#999999", "#E69F00", "#56B4E9", "#009E73", "#F0E442", "#0072B2", "#D55E00", "#CC79A7") 
+```
+
+
+```{r study1-kid-data-1, echo=FALSE, warning=FALSE}
+##### -----
+### Study 1 Kid Data
+##### -----
+
+study1kids <- read.csv('bowling_experiment1_data_kids.csv')
+study1kids <- study1kids[study1kids$Include==1,]
+
+study1kids$TimRating <- as.numeric(levels(study1kids$TimRating))[study1kids$TimRating]
+study1kids$LowExpectationRating <- as.numeric(levels(study1kids$LowExpectationRating))[study1kids$LowExpectationRating]
+study1fours = subset(study1kids, study1kids$AgeBin==4)
+study1fives = subset(study1kids, study1kids$AgeBin==5)
+
+## Sam = strike char; Tim = gutter char
+
+## 4 year olds: Mean, SD for Strike Character
+# mean(study1fours$SamRating); sd(study1fours$SamRating)
+## 4 year olds: Mean, SD for Gutter Character
+# mean(study1fours$TimRating); sd(study1fours$TimRating)
+# t.test(study1fours$SamRating, study1fours$TimRating, paired=T)
+
+## 5 year olds: Mean, SD for Strike Character
+# mean(study1fives$SamRating); sd(study1fives$SamRating)
+## 5 year olds: Mean, SD for Gutter Character
+# mean(study1fives$TimRating); sd(study1fives$TimRating)
+# t.test(study1fives$SamRating, study1fives$TimRating, paired=T)
+
+## binomial test
+# binom.test(sum(study1fours$TimSamFC=="Sam"), nrow(study1fours), p = 0.5)
+# binom.test(sum(study1fives$TimSamFC=="Sam"), nrow(study1fives), p = 0.5)
+```
+
+
+### Experiment 1 Results.
+Children: All children correctly reported the number of pins knocked down in every trial. There were no significant effects of trial order, nor of characters. 
+On the Strike and Gutter practice trials, 4 year-olds and 5 year-olds provided higher ratings to the Strike character than the Gutter character 
+(4 year-olds: Strike vs. Gutter: M(SD) = 
+`r format(mean(study1fours$SamRating), digits=3)` (`r format(sd(study1fours$SamRating), digits=2)`) 
+vs. 
+`r format(mean(study1fours$TimRating), digits=3)` (`r format(sd(study1fours$TimRating), digits=2)`)
+, t(`r t.test(study1fours$SamRating, study1fours$TimRating, paired=T)$parameter`) = `r format(t.test(study1fours$SamRating, study1fours$TimRating, paired=T)$statistic, digits=4)`, p = `r format(t.test(study1fours$SamRating, study1fours$TimRating, paired=T)$p.value, digits=3)`; 5 year-olds: Strike vs. Gutter: M(SD) = 
+`r format(mean(study1fives$SamRating), digits=3)` (`r format(sd(study1fives$SamRating), digits=2)`) 
+vs. 
+`r format(mean(study1fives$TimRating), digits=3)` (`r format(sd(study1fives$TimRating), digits=2)`), t(`r t.test(study1fives$SamRating, study1fives$TimRating, paired=T)$parameter`) = `r format(t.test(study1fives$SamRating, study1fives$TimRating, paired=T)$statistic, digits=4)`, p = `r format(t.test(study1fives$SamRating, study1fives$TimRating, paired=T)$p.value, digits=3)`).
+When given a binary choice between the Strike and Gutter character, all children in both age groups reported that the Strike character was happier than the Gutter character 
+(4 year-olds: 20 of 20 chose Strike, p < 0.001; 5 year-olds: 20 of 20 chose Strike, p < 0.001).
+
+
+```{r study1-kid-data-2, echo=FALSE}
+#mean(study1fours$LowExpectationRating); sd(study1fours$LowExpectationRating)
+#mean(study1fours$HighExpectationRating); sd(study1fours$HighExpectationRating)
+#t.test(study1fours$LowExpectationRating, study1fours$HighExpectationRating, paired=T)
+
+#mean(study1fives$LowExpectationRating); sd(study1fives$LowExpectationRating)
+#mean(study1fives$HighExpectationRating); sd(study1fives$HighExpectationRating)
+#t.test(study1fives$LowExpectationRating, study1fives$HighExpectationRating, paired=T)
+
+#binom.test(sum(study1fours$FCcorrect==1), nrow(study1fours), p = 0.5)
+#binom.test(sum(study1fives$FCcorrect==1), nrow(study1fives), p = 0.5)
+
+
+
+#summary(lm(LowExpectationRating ~ AgeBin * ConditionByOrder * LowExpectationChar, study1kids))
+#summary(lm(HighExpectationRating ~ AgeBin * ConditionByOrder * LowExpectationChar, study1kids))
+#summary(glm(FCcorrect ~ AgeBin * ConditionByOrder * LowExpectationChar, study1kids, family=binomial))
+```
+
+Next, we examined ratings for the test trials (Fig. 2). Recall that both trials have identical outcomes (3 pins knocked down) but they differ with respect to the balls’ initial trajectories (and thus agents’ prior expectations). 
+Four year-olds’ provided the same ratings for the Low Expectation and High Expectation characters (Low Exp. vs. High Exp.: M(SD) = 
+`r format(mean(study1fours$LowExpectationRating), digits=3)` (`r format(sd(study1fours$LowExpectationRating), digits=3)`) 
+vs. 
+`r format(mean(study1fours$HighExpectationRating), digits=3)` (`r format(sd(study1fours$HighExpectationRating), digits=3)`)
+, t(`r t.test(study1fours$LowExpectationRating, study1fours$HighExpectationRating, paired=T)$parameter`) = `r format(t.test(study1fours$LowExpectationRating, study1fours$HighExpectationRating, paired=T)$statistic, digits=4)`, p = `r format(t.test(study1fours$LowExpectationRating, study1fours$HighExpectationRating, paired=T)$p.value, digits=3)`),
+whereas five year-olds reported higher ratings for the Low Expectation character than for the High Expectation character 
+(Low Exp. vs. High Exp.: M(SD) = 
+`r format(mean(study1fives$LowExpectationRating), digits=3)` (`r format(sd(study1fives$LowExpectationRating), digits=3)`) 
+vs. 
+`r format(mean(study1fives$HighExpectationRating), digits=3)` (`r format(sd(study1fives$HighExpectationRating), digits=3)`) 
+, t(`r t.test(study1fives$LowExpectationRating, study1fives$HighExpectationRating, paired=T)$parameter`) = `r format(t.test(study1fives$LowExpectationRating, study1fives$HighExpectationRating, paired=T)$statistic, digits=4)`, p = `r format(t.test(study1fives$LowExpectationRating, study1fives$HighExpectationRating, paired=T)$p.value, digits=3)`).
+When given a forced choice between the Low Expectation and High Expectation character, neither group showed a strong tendency to choose the Low Expectation character (binomial test, p = ns for both), but we note that more five-olds chose this character over the High Expectation character 
+(13 of 20 five-year-olds vs. 9 of 20 four-year-olds).
+
+
+
+```{r study1-adults, echo=FALSE}
+##### -----
+### Study 1 Adult Data
+##### -----
+
+study1adults <- read.csv('bowling_experiment1_adults.csv')
+
+study1adults$passedAllAttentionChecks = (study1adults$attentionCheck1==3) & (study1adults$attentionCheck2==3)
+#drop 1 who failed attention checks
+study1adults <- study1adults[study1adults$passedAllAttentionChecks,]
+
+#table(study1adults$gender)
+#mean(study1adults$age); sd(study1adults$age)
+#min(study1adults$age); max(study1adults$age)
+
+
+# rename this variable
+study1adults$showLowExpectationFirst <- study1adults$showJustInFirst
+study1adults$LowExpectationRating <- study1adults$happyJustIn
+study1adults$HighExpectationRating <- study1adults$happyJustMissed
+
+
+# #need to re-edit forcedHappyLowExpectation based on forcedHappyByOrder. Forgot to take into account "both are equally happy"
+# study1adults$forcedHappyLowExpectation = 1*(study1adults$forcedHappyByOrder==1 & study1adults$showLowExpectationFirst==1) + 1*(study1adults$forcedHappyByOrder==2 & study1adults$showLowExpectationFirst==0) + (-1)*(study1adults$forcedHappyByOrder==3)
+# study1adults$forcedHappyLowExpectationFactor = factor( study1adults$forcedHappyLowExpectation,
+#   levels = c(1, 0, -1), labels = c("LowExpectation", "HighExpectation", "Both"))
+# 
+# #ggplot(study1adults, aes(x=forcedHappyLowExpectationFactor, fill=forcedHappyLowExpectationFactor)) + geom_histogram() +guides(fill=FALSE) + scale_x_discrete(drop=FALSE)+ my_default_theme
+# # 
+# # study1adultsplot1 = data.frame(Response = factor(c("LowExpectation", "HighExpectation", "Both"), 
+# #                                        levels = c("LowExpectation", "HighExpectation", "Both")),
+# #                      N = c(sum(study1adults$forcedHappyLowExpectationFactor=="LowExpectation"), 
+# #                            sum(study1adults$forcedHappyLowExpectationFactor=="HighExpectation"), 
+# #                            sum(study1adults$forcedHappyLowExpectationFactor=="Both")))
+# # study1adultsplot1$proportion = study1adultsplot1$N/59
+# # study1adultsplot1$SE = sqrt(study1adultsplot1$proportion*(1-study1adultsplot1$proportion)/59)
+# # 
+# # ggplot(study1adultsplot1, aes(x=Response, y=proportion, fill=proportion)) + 
+# #   geom_bar(stat="identity") + 
+# #   geom_errorbar(aes(ymin=proportion-SE, ymax=proportion+SE), size=.3, width=.2, position=position_dodge(.9)) +
+# #   ylab("Proportion of responses to 'Who feels happier?'") +
+# #   guides(fill=FALSE) + scale_x_discrete(drop=FALSE)+ my_default_theme
+
+
+
+#mean(study1adults$LowExpectationRating); sd(study1adults$LowExpectationRating)#/sqrt(59)
+#mean(study1adults$HighExpectationRating); sd(study1adults$HighExpectationRating)#/sqrt(59)
+#t.test(study1adults$LowExpectationRating, study1adults$HighExpectationRating, paired=T)
+
+#table(study1adults$forcedHappyLowExpectationFactor)
+```
+
+
+Adults: Adults’ responses were consistent with the 5 year-olds’ ratings, providing higher emotion ratings to the Low Expectation character than the High Expectation character (Low Exp. vs. High Exp.: M(SD) = 
+`r format(mean(study1adults$LowExpectationRating), digits=3)` (`r format(sd(study1adults$LowExpectationRating), digits=3)`) 
+vs. 
+`r format(mean(study1adults$HighExpectationRating), digits=3)` (`r format(sd(study1adults$HighExpectationRating), digits=3)`), 
+t(`r t.test(study1adults$LowExpectationRating, study1adults$HighExpectationRating, paired=T)$parameter`) = `r format(t.test(study1adults$LowExpectationRating, study1adults$HighExpectationRating, paired=T)$statistic, digits=4)`, p = `r format(t.test(study1adults$LowExpectationRating, study1adults$HighExpectationRating, paired=T)$p.value, digits=3)`).
+On the final forced choice question, 23 (of 59) participants chose the Low Expectation character as feeling happier, 2 chose the High Expectation character, and the remaining 34 said that both feel equally happy.
+
+```{r study1-means-plot, echo=FALSE, fig.width=6, fig.height=4}
+##### -----
+### Study 1 Means Plot
+##### -----
+
+study1MeansPlot = data.frame(age = factor(c("4", "4", "5", "5", "Adult", "Adult"),
+                                          levels=c("4", "5", "Adult")),
+                             target = factor(rep(c("Low Expectation", "High Expectation"),3),
+                                             levels=c("Low Expectation", "High Expectation")),
+                             rating = c(mean(study1fours$LowExpectationRating), 
+                                        mean(study1fours$HighExpectationRating),
+                                        mean(study1fives$LowExpectationRating), 
+                                        mean(study1fives$HighExpectationRating), 
+                                        mean(study1adults$LowExpectationRating), 
+                                        mean(study1adults$HighExpectationRating)),
+                             SE = c(sd(study1fours$LowExpectationRating)/sqrt(20), 
+                                    sd(study1fours$HighExpectationRating)/sqrt(20), 
+                                    sd(study1fives$LowExpectationRating)/sqrt(20), 
+                                    sd(study1fives$HighExpectationRating)/sqrt(20), 
+                                    sd(study1adults$LowExpectationRating)/sqrt(59),
+                                    sd(study1adults$HighExpectationRating)/sqrt(59)))
+
+study1MeansPlot$CI = 1.96 * study1MeansPlot$SE
+
+ggplot(study1MeansPlot, aes(x=age, y=rating, fill=target)) + 
+  geom_bar(stat="identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=rating-CI, ymax=rating+CI), 
+                size=.3, width=.2, position=position_dodge(.9)) +
+  scale_fill_manual(name="Target", values=cbPalette[3:5]) + xlab("Age Group") +
+  ylab("Final Rating") + scale_x_discrete(drop=FALSE) + ylim(0, 6) +
+  my_default_theme + theme(legend.position="top") +
+  annotate("text", x = 2, y = 5.5, label = "*", size=8) + 
+  annotate("segment", x = 1.80, xend = 2.20, y = 5.40, yend = 5.40, colour = "black") +
+  annotate("text", x = 3, y = 5.5, label = "*", size=8) +
+  annotate("segment", x = 2.80, xend = 3.20, y = 5.40, yend = 5.40, colour = "black")
+# 6 by 4
+```
+
+
+
+
+
+```{r study2-kid-data-1, echo=FALSE, warning=FALSE}
+##### -----
+### Study 2 Kid Data
+##### -----
+
+study2kids <- read.csv('bowling_experiment2_data_kids.csv')
+#filter by char_initemotion_correct
+study2kids <- study2kids[study2kids$Char_InitEmotion_Correct==1,]
+  
+study2kids_4s = subset(study2kids, study2kids$AgeBin==4)
+study2kids_5s = subset(study2kids, study2kids$AgeBin==5)
+
+#mean(study2kids_4s$Age); sd(study2kids_4s$Age); min(study2kids_4s$Age); max(study2kids_4s$Age)
+#mean(study2kids_5s$Age); sd(study2kids_5s$Age); min(study2kids_5s$Age); max(study2kids_5s$Age)
+
+##table(study2kids$HighExpectationChar)
+##table(study2kids$LowExpectationBW)
+#table(study2kids_4s$LowExpectationBW)
+#table(study2kids_4s$HighExpectationBW)
+#table(study2kids_5s$LowExpectationBW)
+#table(study2kids_5s$HighExpectationBW)
+
+study2kids_4s$HighExpectationRating <- as.numeric(levels(study2kids_4s$HighExpectationRating))[study2kids_4s$HighExpectationRating]
+#table(study2kids_4s$HighExpectationRating); mean(study2kids_4s$HighExpectationRating)
+#table(study2kids_4s$LowExpectationRating); mean(study2kids_4s$LowExpectationRating)
+
+study2kids_5s$HighExpectationRating <- as.numeric(levels(study2kids_5s$HighExpectationRating))[study2kids_5s$HighExpectationRating]
+#table(study2kids_5s$HighExpectationRating); mean(study2kids_5s$HighExpectationRating)
+#table(study2kids_5s$LowExpectationRating); mean(study2kids_5s$LowExpectationRating)
+
+
+
+#t.test(study2kids_4s$HighExpectationRating, study2kids_4s$LowExpectationRating, paired=T)
+#t.test(study2kids_5s$HighExpectationRating, study2kids_5s$LowExpectationRating, paired=T)
+
+#table(study2kids_4s$FC_Correct)
+#table(study2kids_5s$FC_Correct)
+
+#values: 
+#HighExpectationBW (1 = better)
+#LowExpectationBW (1 = better)
+#HighExpectationRating (8) [final rating] # - 6 for relative
+#LowExpectationRating # - 3 for relative
+#FCcorrect = 1 is correct
+
+```
+
+### Experiment 2 Results.
+All children correctly answered the number of pins knocked down in each trial. We observed no effect of trial order or character. For the Strike and Gutter practice trials, both 4- and 5-year-olds successfully reported that the Gutter character was sad (4 year-olds: 17 of 18; 5 year-olds: 18 of 18, p <0.001 by binom. test for both) and the Strike character was happy (4 year-olds: 17 of 18; 5 year-olds: 17 of 18, p <0.001 by binom. test for both). All children in both age groups chose the Strike character as happier than the Gutter character (4-year-olds: 18 of 18; 5-year-olds: 18 of 18, p <0.001 by binom. test for both).
+
+For the critical Low Expectation and High Expectation trials, we analyzed verbal responses (“better or worse?”), relative ratings (difference between the Initial Ratings and Final Ratings), and Final Ratings for each trial. Only children who correctly reported that the Low Expectation character was sad and the High Expectation character was happy in the Initial Ratings were included in our analyses. The vast majority of children reported that the Low Expectation character felt bet- ter after the outcome than at the pause (4 year olds: 16 of 18, p = .001; 5 year-olds: 17 of 18, p < 0.001), while children were at chance for reporting the High Expectation charac- ter to be feeling worse (4 year olds: 12 of 18; 5 year olds: 10 of 18). However, 5-year-olds showed a significant differ- ence in their better/worse responses for the characters (p = .02, Fisher’s exact) and 4-year-olds showed a marginal difference (p = .09). Next, we looked at children’s relative ratings. Both 4-year-olds and 5-year-olds moved the Low Expectation character higher on the scale and the High Expectation char- acter lower (4 year-olds: Low Exp. vs. High Exp.: M(SD) = 2.44(1.21) vs. -.83(1.91), t(17) = -5.39, p <0.001; 5 year- olds: Low Exp. vs. High Exp.: M(SD) = 2.53(1.8) vs. - .86(2.39), t(17) = -8.06, p <0.001). 
+
+
+We found that 4-year- olds’ final ratings for the Low Expectation and High Expectation characters did not differ (Low Exp. vs. High Exp.: M(SD) = 5.17(1.91) vs. 5.44(1.21), t(17) = .79, p = ns), whereas 5-year-olds rated the Low Expectation character as being happier than the High Expectation character (Low Exp. vs. High Exp.: M(SD) = 5.86(1.66) vs. 4.81(2.11), t(17) = 2.60, p = .05). Lastly, given a binary forced choice, neither group was able to report that the Low Expectation character was happier than the High Expectation character (p = ns for both). However, 5-year-olds tended to choose the Low Expectation more often (12 of 18 5-year-olds vs. 8 of 18 4- year-olds).
+
+
+
+
+
+```{r study2-adults, echo=FALSE}
+##### -----
+### Study 2 Adult Data
+##### -----
+
+study2adults <- read.csv('bowling_experiment2_adults.csv')
+
+study2adults$passedAllAttentionChecks = (study2adults$attentionCheck1==3) & (study2adults$attentionCheck2==3)
+#drop 2 who failed attention checks
+study2adults <- study2adults[study2adults$passedAllAttentionChecks,]
+
+#table(study2adults$gender)
+#mean(study2adults$age); sd(study2adults$age)
+#min(study2adults$age); max(study2adults$age)
+
+# rename these variables
+study2adults$forcedHappyLowExpectation <- study2adults$forcedHappyJustIn
+study2adults$happyAtPauseLowExpectation <- study2adults$happyAtPauseJustIn
+study2adults$betterAfterLowExpectation <- study2adults$betterAfterJustIn
+study2adults$happyAfterLowExpectation <- study2adults$deltaHappyJustIn
+study2adults$happyAtPauseHighExpectation <- study2adults$happyAtPauseJustMissed
+study2adults$betterAfterHighExpectation <- study2adults$betterAfterJustMissed
+study2adults$happyAfterHighExpectation <- study2adults$deltaHappyJustMissed
+
+study2adults$forcedHappyLowExpectationFactor = factor( study2adults$forcedHappyLowExpectation,
+  levels = c(1, 0, -1), labels = c("LowExpectation", "HighExpectation", "Both"))
+
+#ggplot(study2adults, aes(x=forcedHappyLowExpectationFactor, fill=forcedHappyLowExpectationFactor)) + geom_histogram() + guides(fill=FALSE) + scale_x_discrete(drop=FALSE)+ my_default_theme
+# 
+# study2adultsplot1 = data.frame(Response = factor(c("LowExpectation", "HighExpectation", "Both"), 
+#                                        levels = c("LowExpectation", "HighExpectation", "Both")),
+#                      N = c(sum(study2adults$forcedHappyLowExpectationFactor=="LowExpectation"), 
+#                            sum(study2adults$forcedHappyLowExpectationFactor=="HighExpectation"), 
+#                            sum(study2adults$forcedHappyLowExpectationFactor=="Both")))
+# study2adultsplot1$proportion = study2adultsplot1$N/58
+# study2adultsplot1$SE = sqrt(study2adultsplot1$proportion*(1-study2adultsplot1$proportion)/58)
+# 
+# ggplot(study2adultsplot1, aes(x=Response, y=proportion, fill=proportion)) + geom_bar(stat="identity") + geom_errorbar(aes(ymin=proportion-SE, ymax=proportion+SE), size=.3, width=.2, position=position_dodge(.9)) + ylab("Proportion of responses to 'Who feels happier?'") + guides(fill=FALSE) + scale_x_discrete(drop=FALSE)+ my_default_theme
+
+
+#table(study2adults$happyAtPauseLowExpectation)
+#table(study2adults$betterAfterLowExpectation)
+##table(study2adults$happyAfterLowExpectation)
+#mean(study2adults$happyAfterLowExpectation); sd(study2adults$happyAfterLowExpectation)
+
+#table(study2adults$happyAtPauseHighExpectation)
+#table(study2adults$betterAfterHighExpectation)
+##table(study2adults$happyAfterHighExpectation)
+#mean(study2adults$happyAfterHighExpectation); sd(study2adults$happyAfterHighExpectation)
+
+#t.test(study2adults$happyAfterLowExpectation, study2adults$happyAfterHighExpectation, paired=T)
+
+study2adults$ChangeInHappinessLowExpectation = study2adults$happyAfterLowExpectation - ((study2adults$happyAtPauseLowExpectation)*3+3)
+study2adults$ChangeInHappinessHighExpectation = study2adults$happyAfterHighExpectation - ((study2adults$happyAtPauseHighExpectation)*3+3)
+
+```
+
+Overall, adult participants responded as we predicted on all the questions. Participants reported that the Low Expectation character felt sad initially (57 of 58) and felt better after seeing the outcome (58 of 58); they thought the High Expectation character felt happy initially (56 of 58) and felt worse after the outcome (46 of 58). Adults’ ratings were significantly higher for the Low Expectation character (Low Exp. vs. High Exp.: M(SD) = 6.33 (.98) vs. 4.62 (0.89), t(57)=10.46, p <0.001). On the forced choice question, 42 chose the Low Expectation character as feeling happier, and the remaining 16 said that both characters feel equally happy.
+
+
+```{r study2-means-plot, echo=FALSE, fig.width=6, fig.height=4.5}
+##### -----
+### Study 2 Means Plot
+##### -----
+
+study2MeansPlot = data.frame(age = factor(c("4", "4", "5", "5", "Adult", "Adult"),
+                                          levels=c("4", "5", "Adult")),
+                             target = factor(rep(c("Low Expectation", "High Expectation"),3),
+                                             levels=c("Low Expectation", "High Expectation")),
+                             rating = c(mean(study2kids_4s$LowExpectationRating-3), 
+                                        mean(study2kids_4s$HighExpectationRating-6), 
+                                        mean(study2kids_5s$LowExpectationRating-3),
+                                        mean(study2kids_5s$HighExpectationRating-6), 
+                                        mean(study2adults$ChangeInHappinessLowExpectation), 
+                                        mean(study2adults$ChangeInHappinessHighExpectation)),
+                             SE = c(sd(study2kids_4s$LowExpectationRating-3)/sqrt(20),
+                                    sd(study2kids_4s$HighExpectationRating-6)/sqrt(20), 
+                                    sd(study2kids_5s$LowExpectationRating-3)/sqrt(20), 
+                                    sd(study2kids_5s$HighExpectationRating-6)/sqrt(20),
+                                    sd(study2adults$ChangeInHappinessLowExpectation)/sqrt(58),
+                                    sd(study2adults$ChangeInHappinessHighExpectation)/sqrt(58)))
+study2MeansPlot$CI = 1.96 * study2MeansPlot$SE
+
+
+ggplot(study2MeansPlot, aes(x=age, y=rating, fill=target)) + 
+  geom_bar(stat="identity", position=position_dodge()) +
+  geom_errorbar(aes(ymin=rating-CI, ymax=rating+CI), 
+                size=.3, width=.2, position=position_dodge(.9)) +
+  scale_fill_manual(name="Target", values=cbPalette) + 
+  #scale_fill_manual(name="Target", values=cbPalette[3:5]) + 
+  xlab("Age Group") +
+  ylab("Final Rating - Initial Rating") + scale_x_discrete(drop=FALSE) + ylim(-2.25, 4) +
+  my_default_theme + theme(legend.position="top")
+
+
+#6 by 4.5 pdf
+```
+
+
+
