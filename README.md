@@ -4,6 +4,7 @@
 This repository contains materials for the following project:
 
 Ong, D. C.\*, Asaba, M.\*, & Gweon, H. (2016). Young children and adults integrate past expectations and current outcomes to reason about others' emotions. In <i>Proceedings of the 38th Annual Meeting of the Cognitive Science Society</i>.
+
 \* equal contribution
 
 This repository is maintained by Desmond Ong. Questions, comments, requests for clarification or replication, etc, should be directed to desmond (dot) ong (at) stanford (dot) edu
