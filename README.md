@@ -1,10 +1,12 @@
-# Bowling
+NOTE: We have a final, updated and fixed repository at https://osf.io/wakbu/. This current Github repo is not up to date.
 
 
-This repository contains materials for the following project:
+(Potentially Outdated Information)
+
+This repository contains materials for the following paper:
 
 
-Asaba, M.\*, Ong, D. C.\*, & Gweon, H. (in preparation). Preschool-aged children integrate past expectations and current outcomes to infer others' emotions
+Asaba, M.\*, Ong, D. C.\*, & Gweon, H. (in press). Integrating expectations and outcomes: Preschoolers’ developing ability to reason about others’ emotions. *Developmental Psychology*. doi: 10.1037/dev0000749.
 
 \* equal contribution
 
